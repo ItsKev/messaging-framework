@@ -1,0 +1,4 @@
+name: MessagingFramework
+main: net.itskev.messagingframework.proxy.MessagingFrameworkPlugin
+version: @VERSION@
+author: ItsKev
