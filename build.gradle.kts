@@ -1,5 +1,5 @@
 plugins {
-    java
+    `java-library`
     `maven-publish`
     id("com.github.johnrengelman.shadow") version "7.0.0"
 }
@@ -10,7 +10,7 @@ repositories {
 
 subprojects {
     apply {
-        plugin("java")
+        plugin("java-library")
         plugin("maven-publish")
         plugin("com.github.johnrengelman.shadow")
     }

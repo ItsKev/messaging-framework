@@ -1,3 +1,3 @@
 dependencies {
-    implementation("com.rabbitmq:amqp-client:5.13.0")
+    api("com.rabbitmq:amqp-client:5.13.0")
 }
