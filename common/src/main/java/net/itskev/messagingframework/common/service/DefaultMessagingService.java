@@ -26,6 +26,7 @@ public class DefaultMessagingService {
   private final Queue<LostMessage> queuedMessages = new LinkedList<>();
   private final Channel consumerChannel;
   private Channel publishChannel;
+  private int count;
 
   public DefaultMessagingService(List<String> addresses, String username, String password)
       throws IOException, TimeoutException {
@@ -35,6 +36,7 @@ public class DefaultMessagingService {
     connectionFactory.setNetworkRecoveryInterval(250);
 
     connection = connectionFactory.newConnection(mapAddresses(addresses));
+    System.out.println(connection.getAddress());
     consumerChannel = connection.createChannel();
     publishChannel = connection.createChannel();
   }
@@ -84,7 +86,10 @@ public class DefaultMessagingService {
 
   public void startConsuming(String queue) throws IOException {
     DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-      System.out.println(new String(delivery.getBody(), StandardCharsets.UTF_8));
+      count++;
+      if (count % 1000 == 0 || count > 45_000) {
+        System.out.println(count);
+      }
     };
     publishChannel.queueDeclare(queue, true, false, false, arguments);
     consumerChannel.basicConsume(queue, true, deliverCallback, (consumerTag, sig) -> System.out.println("Shutdown"));
